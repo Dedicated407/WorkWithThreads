@@ -4,10 +4,14 @@ using System.Diagnostics;
 
 Stopwatch stopWatch = new Stopwatch();
 OneThreadFirstExample();
-ManyThreadsFirstExample();
+Console.WriteLine("------------------------------");
+ParallelFirstExample();
 Console.WriteLine("------------------------------");
 OneThreadSecondExample();
-ManyThreadsSecondExample();
+Console.WriteLine("------------------------------");
+ParallelSecondExample();
+
+Console.ReadLine();
 
 void OneThreadFirstExample()
 {
@@ -18,7 +22,6 @@ void OneThreadFirstExample()
         DoWork(i);
     }
     stopWatch.Stop();
-    
     Result(stopWatch.Elapsed);
 }
 
@@ -26,7 +29,7 @@ void OneThreadSecondExample()
 {
     Stopwatch stopWatch2 = new Stopwatch();
     
-    Console.WriteLine("OneThreadSecondExample");
+    Console.WriteLine("One Thread Second Example");
     
     stopWatch2.Start();
     OneThreadFirstExample();
@@ -34,23 +37,24 @@ void OneThreadSecondExample()
     OneThreadFirstExample();
     stopWatch2.Stop();
     
+    Console.Write("Summary: ");
     Result(stopWatch2.Elapsed);
 }
 
-void ManyThreadsFirstExample()
+void ParallelFirstExample()
 {
-    Console.WriteLine("ManyThreads");
+    Console.WriteLine("Parallel");
     stopWatch.Restart();
     Parallel.For(0, 10, DoWork);
     stopWatch.Stop();
     Result(stopWatch.Elapsed);
 }
 
-void ManyThreadsSecondExample()
+void ParallelSecondExample()
 {
     Stopwatch stopWatch2 = new Stopwatch();
     
-    Console.WriteLine("\n\nOneThreadSecondExample\n");
+    Console.WriteLine("Parallel Second Example");
     
     stopWatch2.Start();
     Parallel.Invoke(
@@ -59,6 +63,7 @@ void ManyThreadsSecondExample()
         OneThreadFirstExample);
     stopWatch2.Stop();
     
+    Console.Write("Summary: ");
     Result(stopWatch2.Elapsed);
 }
 
